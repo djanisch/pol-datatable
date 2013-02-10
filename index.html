@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>pol-datatable</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" /> 
+    <link href="css/normalize.css" rel="stylesheet" type="text/css" media="screen" title="Standard" />
+    <link href="css/main.css" rel="stylesheet" type="text/css" media="screen" title="Standard" />
+	<script src="http://ajax.googleapis.com/ajax/libs/prototype/1.7.1.0/prototype.js"></script>
+	<script src="js/configurable.js"></script>
+	<script src="js/datatable.js"></script>
+    <style>
+        #datatable{width:100%;margin:1em auto 2em;font-size:0.85em;border:collapse;border:0.2em solid #009770;-moz-box-shadow:0.25em 0.25em 0.3em #dfdfdf;-webkit-box-shadow:0.25em 0.25em 0.3em #dfdfdf;box-shadow:0.25em 0.25em 0.3em #dfdfdf;}
+        #datatable,#datatable td,#datatable th{border:collapse;border:0.125em solid #009770;}
+        #datatable th{font-weight:bold;background-color:#e4a800;color:#000;}
+        #datatable tr:hover td,#datatable a:hover{background:#fcf7b2;}
+        #datatable td,#datatable th{padding:0.5em;}
+        #datatable td{font-size:0.9em;}
+        #datatable tr:target{border:0.5em solid #009770;font-weight:bold;}
+        #datatable tr{-o-transition:all 0.3s ease-in-out;}
+        #datatable a{color:#048056;font-weight:bold;display:block;margin:-0.5em;padding:0.5em;}
+        #datatable a:focus,#datatable a:active{color:#fff;}
+        .selectbox-menu a:hover,.selectbox-menu a:focus,.selectbox-menu a:active{background:#fcf7b2;}
+        .selectbox-menu{position:absolute;border:0.125em solid #009770;-moz-border-radius:0.25em;-webkit-border-radius:0.25em;border-radius:0.25em;width:10em;max-height:15em;overflow-x:hidden;overflow-y:auto;background-color:#e4a800;font-family:"Segoe UI",Frutiger,Tahoma,Helvetica,"Helvetica Neue",Arial,sans-serif;}
+        .selectbox-menu a{display:block;padding:0.5em 0.5em;background-color:#e4a800;}
+        .custom-select-text{float:left;padding:0.25em 0.5em;}
+        a.custom-select{-webkit-transition:all 0.3s ease-in-out;-o-transition:all 0.3s ease-in-out;-moz-transition:all 0.3s ease-in-out;transition:all 0.3s ease-in-out;display: block;}
+        a.custom-select,.selectbox-menu a{background-color:#e4a800;text-decoration:none;color:#000;}
+        .selectbox-menu li[aria-selected="true"] a{background:#009770;color:#fff;}
+        .skip,a.skip:visited{color:#fff;background:#081c3a;}
+        .skip{position:absolute;left:-9999px;font-weight:bold;}
+        .skip:focus,.skip:active{position:absolute;top:0;left:0;width:100%;display:block;font-size:1.3em;z-index:5;}
+        ul[role='listbox']{list-style: none;}
+        .group:after{content:".";display:block;height:0;clear:both;visibility:hidden;}
+    </style>
+</head>
+<body>
+    <h1>Datatable</h1>
+    <table id="datatable">
+        <tr>
+           <th>Titel</th>
+           <th>Projekt</th>
+           <th>Globalthema</th>
+           <th>Schlagwort</th>
+           <th>Gebiet</th>
+           <th>Ebene</th>
+           <th>Erstellungszeitpunkt</th>
+           <th>Ersteller</th>  
+        </tr>
+        <tr>
+          <td>Dummy</td>
+          <td>dummy3</td>
+          <td>root</td>
+          <td>test_kind</td>
+          <td>Österreich</td>
+          <td>politische Bezirke</td>
+          <td>06.11.2010</td>
+          <td>test_user</td>
+        </tr>
+        <tr>
+          <td>Nächtigungen</td>
+          <td>dummy</td>
+          <td>root</td>
+          <td>test_kind</td>
+          <td>Österreich</td>
+          <td>NUTS3-Ebene</td>
+          <td>10.11.2010</td>
+          <td>test_user</td>
+        </tr>
+        <tr>
+          <td>Nächtigungen2</td>
+          <td>dummy3</td>
+          <td>root</td>
+          <td>test_kind</td>
+          <td>Österreich</td>
+          <td>NUTS3-Ebene</td>
+          <td>10.11.2012</td>
+          <td>test_user</td>
+        </tr>
+    </table>
+<script type="text/javascript">
+/* <![CDATA[ */
+    document.observe('dom:loaded', new Datatable());
+/* ]]> */
+</script>
+</body>
+</html>
