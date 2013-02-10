@@ -201,8 +201,14 @@ Datatable = Class.create(Configurable, {
     {
         var arr_header_cells = document.getElementsByTagName('th');
         var insert_string = '';
+        $(this.options.table_id).wrap('div', {'id' : this.options.header_class_name + 'table-selectbox'});
+        var insert_string_list = '<div id="' + this.options.header_class_name + 'table-selecttitle"><a href="#">' + this.options.display_name + '</a></div><ul id="' + this.options.header_class_name + 'table-selectlist" style="display: none;">';
         for(cnt=0; cnt < arr_header_cells.length; ++cnt)
         {
+            if(!arr_header_cells[cnt].hasClassName(this.options.essential_class_name))
+            {
+                insert_string_list +=  '<li><input type="checkbox" value="'+ this.options.header_class_name + cnt + '" checked /> ' + arr_header_cells[cnt].innerHTML.stripTags() + '</li>';
+            }
             insert_string = '<select class="selectbox" name="' + this.options.header_class_name + cnt + '" id="' + this.options.header_class_name + cnt + '">';
             insert_string += '<option value="tableheader-value">' + arr_header_cells[cnt].innerHTML.stripTags() + '</option>';
             for(subcnt=0; subcnt < this.arr_search_values_class_[cnt].length; ++subcnt)
@@ -212,6 +218,9 @@ Datatable = Class.create(Configurable, {
             insert_string += '</select>';
             arr_header_cells[cnt].update(insert_string);
         }
+        insert_string_list += '</ul>';
+        $(this.options.header_class_name + 'table-selectbox').insert({'top' : insert_string_list});
+        $(this.options.header_class_name + 'table-selecttitle').observe('click', this.toggleMenu.bindAsEventListener(this));
     },
     updateTable : function()
     {
@@ -246,10 +255,18 @@ Datatable = Class.create(Configurable, {
             else
                 row.hide();
         }.bind(arr_choosen))
+    },
+    toggleMenu : function(event)
+    {
+        event.stop();
+        $(this.options.header_class_name + 'table-selectlist').toggle();
     }
 });
 
 Datatable.DEFAULT_OPTIONS = {
     table_id: 'datatable',
-    header_class_name: 'datatable-class-'
+    header_class_name: 'datatable-class-',
+    display_name: 'Spalten',
+    essential_class_name : 'essential'
 };
+
