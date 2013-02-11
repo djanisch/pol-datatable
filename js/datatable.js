@@ -158,6 +158,7 @@ Datatable = Class.create(Configurable, {
     arr_cell_classes_ : new Array,
     arr_search_values_class_ : new Array,
     cell_cnt_ : 0,
+    arr_table_headers_ : new Array,
     initialize: function(options) 
     {
         this.setOptions(options);
@@ -178,6 +179,15 @@ Datatable = Class.create(Configurable, {
                 this.arr_cell_classes_[cnt] = this.options.header_class_name + cnt;
                 arr_header_cells[cnt].addClassName(this.options.header_class_name + cnt);
                 this.arr_search_values_class_[cnt] = new Array();
+                if(row.cells[cnt].hasAttribute('id'))
+                {
+                    this.arr_table_headers_.push(row.cells[cnt].id);
+                }
+                else
+                {
+                    row.cells[cnt].writeAttribute({ 'id' : this.options.table_id + '-c' + cnt});
+                    this.arr_table_headers_.push(this.options.table_id + '-c' + cnt);
+                }
             }
             this.cell_cnt_ = 0;
             var value = '';
@@ -188,6 +198,10 @@ Datatable = Class.create(Configurable, {
                     value = row.cells[cnt].innerHTML.stripTags();
                     this.arr_search_values_class_[cnt].push(value);
                     row.cells[cnt].insert('<span class="' + this.options.header_class_name + cnt + '" style="display: none;">' + value + '</span>');
+                    if(!row.cells[cnt].hasAttribute('headers'))
+                    {
+                        row.cells[cnt].writeAttribute({'headers' : this.arr_table_headers_[cnt]});
+                    }
                 }
             }
         }.bind(this));
@@ -207,7 +221,7 @@ Datatable = Class.create(Configurable, {
         {
             if(!arr_header_cells[cnt].hasClassName(this.options.essential_class_name))
             {
-                insert_string_list +=  '<li><input type="checkbox" value="'+ this.options.header_class_name + cnt + '" checked /> ' + arr_header_cells[cnt].innerHTML.stripTags() + '</li>';
+                insert_string_list +=  '<li><input type="checkbox" value="'+ this.arr_table_headers_[cnt] + '" checked /> ' + arr_header_cells[cnt].innerHTML.stripTags() + '</li>';
             }
             insert_string = '<select class="selectbox" name="' + this.options.header_class_name + cnt + '" id="' + this.options.header_class_name + cnt + '">';
             insert_string += '<option value="tableheader-value">' + arr_header_cells[cnt].innerHTML.stripTags() + '</option>';
@@ -221,6 +235,15 @@ Datatable = Class.create(Configurable, {
         insert_string_list += '</ul>';
         $(this.options.header_class_name + 'table-selectbox').insert({'top' : insert_string_list});
         $(this.options.header_class_name + 'table-selecttitle').observe('click', this.toggleMenu.bindAsEventListener(this));
+        $$('#' + this.options.header_class_name + 'table-selectlist input[type="checkbox"]').each(function(element){
+            element.observe('change', function(event){
+                var input = Event.findElement(event);
+                $(input.value).toggle();
+                $$('td[headers="' + input.value + '"]').each(function(td){
+                    td.toggle();
+                });
+            });
+        });
     },
     updateTable : function()
     {
