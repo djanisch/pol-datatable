@@ -216,7 +216,7 @@ Datatable = Class.create(Configurable, {
         var arr_header_cells = document.getElementsByTagName('th');
         var insert_string = '';
         $(this.options.table_id).wrap('div', {'id' : this.options.header_class_name + 'table-selectbox'});
-        var insert_string_list = '<div id="' + this.options.header_class_name + 'table-selecttitle"><a href="#">' + this.options.display_name + '</a></div><ul id="' + this.options.header_class_name + 'table-selectlist" style="display: none;">';
+        var insert_string_list = '<div id="' + this.options.header_class_name + 'table-selecttitle"><a href="#" aria-haspopup="true" role="button" aria-owns="' + this.options.header_class_name + 'table-selectlist">' + this.options.display_name + '</a></div><ul id="' + this.options.header_class_name + 'table-selectlist" style="display: none;">';
         for(cnt=0; cnt < arr_header_cells.length; ++cnt)
         {
             if(!arr_header_cells[cnt].hasClassName(this.options.essential_class_name))
@@ -274,9 +274,13 @@ Datatable = Class.create(Configurable, {
                 }
             }
             if(tmp_checksum>=arr_choosen.length || arr_cells.length==0)
+            {
                 row.show();
+            }
             else
+            {
                 row.hide();
+            }
         }.bind(arr_choosen))
     },
     toggleMenu : function(event)
